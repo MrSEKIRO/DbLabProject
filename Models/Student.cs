@@ -17,6 +17,9 @@ namespace DbLabProject.Models
 
 		public Room? Room { get; set; }
 		public int? RoomId { get; set; }
+
+		public List<Reserve> Reserves { get; set; } = new List<Reserve>();
+		public List<Restaurant> AvailableRestaurants { get; set; } = new List<Restaurant>();
 	}
 
 	public class Dormitory
@@ -28,6 +31,7 @@ namespace DbLabProject.Models
 		public DegreeType Degree { get; set; }
 
 		public List<Block> Blocks { get; set; } = new List<Block>();
+		public List<Employee> Employees { get; set; } = new List<Employee>();
 	}
 
 	public class Block

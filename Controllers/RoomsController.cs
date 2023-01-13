@@ -39,6 +39,7 @@ namespace DbLabProject.Controllers
             var room = await _context.Rooms
                 .Include(r => r.Block)
                 .ThenInclude(b => b.Dormitory)
+                .Include(r => r.Students)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (room == null)
             {

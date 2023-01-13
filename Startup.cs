@@ -1,6 +1,8 @@
 using DbLabProject.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,17 @@ namespace DbLabProject
 		{
 			services.AddControllersWithViews();
 
+			services.AddAuthentication(options =>
+			{
+				options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+				options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			}).AddCookie(options =>
+			{
+				options.LoginPath = new PathString("/Auth/Login");
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(10.0);
+			});
+
 			services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(
 				Configuration["ConnectionStrings:DefaultConnection"]));
 
@@ -50,6 +63,7 @@ namespace DbLabProject
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>

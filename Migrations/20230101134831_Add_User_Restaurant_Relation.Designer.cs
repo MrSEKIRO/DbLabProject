@@ -4,14 +4,16 @@ using DbLabProject.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbLabProject.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230101134831_Add_User_Restaurant_Relation")]
+    partial class Add_User_Restaurant_Relation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,11 +304,11 @@ namespace DbLabProject.Migrations
             modelBuilder.Entity("DbLabProject.Models.Employee", b =>
                 {
                     b.HasOne("DbLabProject.Models.Dormitory", "Dormitory")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("DormitoryId");
 
                     b.HasOne("DbLabProject.Models.Restaurant", "Restaurant")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("RestaurantId");
 
                     b.Navigation("Dormitory");
@@ -408,8 +410,6 @@ namespace DbLabProject.Migrations
             modelBuilder.Entity("DbLabProject.Models.Dormitory", b =>
                 {
                     b.Navigation("Blocks");
-
-                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("DbLabProject.Models.Food", b =>
@@ -419,8 +419,6 @@ namespace DbLabProject.Migrations
 
             modelBuilder.Entity("DbLabProject.Models.Restaurant", b =>
                 {
-                    b.Navigation("Employees");
-
                     b.Navigation("Reserves");
                 });
 

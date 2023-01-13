@@ -4,14 +4,16 @@ using DbLabProject.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbLabProject.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230101134459_AddReserveRelations")]
+    partial class AddReserveRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,21 +275,6 @@ namespace DbLabProject.Migrations
                     b.ToTable("FoodRestaurant");
                 });
 
-            modelBuilder.Entity("RestaurantStudent", b =>
-                {
-                    b.Property<int>("AvailableRestaurantsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AvailableStudnetsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AvailableRestaurantsId", "AvailableStudnetsId");
-
-                    b.HasIndex("AvailableStudnetsId");
-
-                    b.ToTable("RestaurantStudent");
-                });
-
             modelBuilder.Entity("DbLabProject.Models.Block", b =>
                 {
                     b.HasOne("DbLabProject.Models.Dormitory", "Dormitory")
@@ -302,11 +289,11 @@ namespace DbLabProject.Migrations
             modelBuilder.Entity("DbLabProject.Models.Employee", b =>
                 {
                     b.HasOne("DbLabProject.Models.Dormitory", "Dormitory")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("DormitoryId");
 
                     b.HasOne("DbLabProject.Models.Restaurant", "Restaurant")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("RestaurantId");
 
                     b.Navigation("Dormitory");
@@ -385,21 +372,6 @@ namespace DbLabProject.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RestaurantStudent", b =>
-                {
-                    b.HasOne("DbLabProject.Models.Restaurant", null)
-                        .WithMany()
-                        .HasForeignKey("AvailableRestaurantsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DbLabProject.Models.Student", null)
-                        .WithMany()
-                        .HasForeignKey("AvailableStudnetsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DbLabProject.Models.Block", b =>
                 {
                     b.Navigation("Rooms");
@@ -408,8 +380,6 @@ namespace DbLabProject.Migrations
             modelBuilder.Entity("DbLabProject.Models.Dormitory", b =>
                 {
                     b.Navigation("Blocks");
-
-                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("DbLabProject.Models.Food", b =>
@@ -419,8 +389,6 @@ namespace DbLabProject.Migrations
 
             modelBuilder.Entity("DbLabProject.Models.Restaurant", b =>
                 {
-                    b.Navigation("Employees");
-
                     b.Navigation("Reserves");
                 });
 

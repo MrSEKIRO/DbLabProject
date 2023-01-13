@@ -17,6 +17,9 @@ namespace DbLabProject.Models
 		public string Location { get; set; } = string.Empty;
 
 		public List<Food> Foods { get; set; } = new List<Food>();
+		public List<Reserve> Reserves { get; set; } = new List<Reserve>();
+		public List<Student> AvailableStudnets { get; set; } = new List<Student>();
+		public List<Employee> Employees { get; set; } = new List<Employee>();
 	}
 
 	public class Food
@@ -31,6 +34,7 @@ namespace DbLabProject.Models
 		public int Price { get; set; }
 
 		public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
+		public List<Reserve> Reserves { get; set; } = new List<Reserve>();
 	}
 
 	public class Reserve
